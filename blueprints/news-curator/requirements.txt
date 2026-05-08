@@ -1,0 +1,7 @@
+# News Curator Blueprint Requirements
+
+pyautogen>=0.2.0
+openai>=1.0.0
+python-dotenv>=1.0.0
+newspaper3k>=0.2.8
+feedparser>=6.0.0
