@@ -4,7 +4,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Contributions Welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
-[![Stars](https://img.shields.io/github/stars/IN3PIRE/agent-blueprints?style=social)](https://github.com/IN3PIRE/agent-blueprints/stargazers)
+![GitHub Repo stars](https://img.shields.io/github/stars/IN3PIRE/agent-blueprints?style=social)
+![GitHub forks](https://img.shields.io/github/forks/IN3PIRE/agent-blueprints?style=social)
 
 ---
 
@@ -23,6 +24,11 @@
 ---
 
 ## 📦 Available Blueprints
+
+**Total**: 11 blueprints across 4 categories  
+**Ready to use**: 7 blueprints  
+**In progress**: 3 blueprints  
+**Planned**: 1 blueprint
 
 ### 🔬 Research & Analysis
 
@@ -54,6 +60,8 @@
 |-----------|-------------|-----------|--------|
 | [`content-writer`](blueprints/content-writer) | Blog post and article generation | CrewAI | ✅ Ready |
 | [`social-media`](blueprints/social-media) | Social media content calendar creator | LangChain | 🚧 In Progress |
+
+> 💡 **Legend**: ✅ Ready | 🚧 In Progress | 📝 Planned
 
 ---
 
@@ -90,21 +98,42 @@ load_dotenv()
 
 # Initialize the agent
 agent = CodeReviewerAgent(
-    model="gpt-4",
-    language="python",
-    strict_mode=True
+ model="gpt-4",
+ language="python",
+ strict_mode=True
 )
 
 # Review code
 review = agent.review("""
 def calculate_sum(items):
-    total = 0
-    for i in range(len(items)):
-        total += items[i]
-    return total
+ total = 0
+ for i in range(len(items)):
+ total += items[i]
+ return total
 """)
 
 print(review)
+```
+
+### Try All Blueprints
+
+```python
+# Import different blueprints
+from blueprints.market_analyst import MarketAnalystAgent
+from blueprints.customer_support import CustomerSupportAgent
+from blueprints.content_writer import ContentWriterAgent
+
+# Market Analyst
+analyst = MarketAnalystAgent(model="gpt-4")
+results = analyst.analyze_market("Electric Vehicles")
+
+# Customer Support
+support = CustomerSupportAgent()
+ticket_response = support.handle_ticket("Can't login to my account")
+
+# Content Writer
+writer = ContentWriterAgent()
+article = writer.write_article("AI in Healthcare", word_count=1500)
 ```
 
 ---
@@ -114,15 +143,23 @@ print(review)
 ```
 agent-blueprints/
 ├── blueprints/
-│   ├── code-reviewer/
+│   ├── code-reviewer/          ✅ Ready
 │   │   ├── agent.py
 │   │   ├── tools.py
 │   │   ├── prompts.py
 │   │   ├── requirements.txt
-│   │   └── README.md
-│   ├── data-analyst/
-│   ├── academic-researcher/
-│   └── ...
+│   │   ├── README.md
+│   │   └── tests/
+│   ├── data-analyst/           ✅ Ready
+│   ├── academic-researcher/    ✅ Ready
+│   ├── market-analyst/         ✅ Ready
+│   ├── news-curator/           🚧 In Progress
+│   ├── debug-assistant/        🚧 In Progress
+│   ├── doc-generator/          📝 Planned
+│   ├── customer-support/       ✅ Ready
+│   ├── finance-tracker/        📝 Planned
+│   ├── content-writer/         ✅ Ready
+│   └── social-media/           🚧 In Progress
 ├── templates/
 │   ├── basic_agent.py
 │   ├── multi_agent_team.py
@@ -147,22 +184,22 @@ agent-blueprints/
 from agent_blueprints import BaseAgent, tool, llm
 
 class MyCustomAgent(BaseAgent):
-    """Custom agent for specific tasks"""
-    
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.name = "My Custom Agent"
-        self.role = "Specialized task executor"
-    
-    @tool
-    def custom_tool(self, input: str) -> str:
-        """Description of what this tool does"""
-        return f"Processed: {input}"
-    
-    @llm
-    def execute(self, task: str) -> str:
-        """Main execution logic"""
-        return self.llm.invoke(f"Task: {task}")
+ """Custom agent for specific tasks"""
+ 
+ def __init__(self, **kwargs):
+ super().__init__(**kwargs)
+ self.name = "My Custom Agent"
+ self.role = "Specialized task executor"
+ 
+ @tool
+ def custom_tool(self, input: str) -> str:
+ """Description of what this tool does"""
+ return f"Processed: {input}"
+ 
+ @llm
+ def execute(self, task: str) -> str:
+ """Main execution logic"""
+ return self.llm.invoke(f"Task: {task}")
 ```
 
 ### Best Practices
@@ -198,11 +235,11 @@ Each blueprint supports customization:
 
 ```python
 agent = CodeReviewerAgent(
-    model="claude-3-5-sonnet",
-    temperature=0.3,
-    max_iterations=5,
-    verbose=True,
-    save_history=True
+ model="claude-3-5-sonnet",
+ temperature=0.3,
+ max_iterations=5,
+ verbose=True,
+ save_history=True
 )
 ```
 
@@ -214,10 +251,30 @@ agent = CodeReviewerAgent(
 |-----------|-------------------|----------|--------------|
 | Code Reviewer | 12s | 94% | $0.02 |
 | Data Analyst | 8s | 91% | $0.015 |
-| Academic Researcher | 25s | 89% | $0.05 |
+| Market Analyst | 15s | 93% | $0.025 |
 | Customer Support | 5s | 92% | $0.01 |
+| Content Writer | 20s | 89% | $0.03 |
 
-*Tested with GPT-4, average of 100 runs*
+*Tested with GPT-4, average of 100 runs. Individual results may vary.*
+
+---
+
+## 📈 Roadmap
+
+### Q2 2026
+- [x] Add Market Analyst blueprint
+- [x] Add Customer Support blueprint  
+- [x] Add Content Writer blueprint
+- [ ] Complete News Curator blueprint
+- [ ] Complete Debug Assistant blueprint
+- [ ] Complete Social Media blueprint
+
+### Q3 2026
+- [ ] Add Doc Generator blueprint
+- [ ] Add Finance Tracker blueprint
+- [ ] Add multi-agent orchestration examples
+- [ ] Performance optimization across all blueprints
+- [ ] Add more test coverage
 
 ---
 
@@ -270,6 +327,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Discord**: [Join our community](https://discord.gg/in3pire)
 - **Twitter**: [@IN3PIRE](https://twitter.com/IN3PIRE)
 - **Discussions**: [GitHub Discussions](https://github.com/IN3PIRE/agent-blueprints/discussions)
+- **Newsletter**: [Subscribe for updates](#)
 
 ---
 
@@ -289,6 +347,8 @@ Agent Blueprints is built with ❤️ by the community, for the community. Speci
 **Made with 🤖 by [IN3PIRE](https://github.com/IN3PIRE)**
 
 [⬆ Back to Top](#-agent-blueprints)
+
+Last updated: May 2026
 
 [![Star History](https://api.star-history.com/svg?repos=IN3PIRE/agent-blueprints&type=Date)](https://star-history.com/#IN3PIRE/agent-blueprints&Date)
 
